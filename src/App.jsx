@@ -1,6 +1,8 @@
+import Mobile from "./views/Mobile"
+
 const App = () => {
   return (
-    <h1>hola </h1>  
+    <Mobile />
   )
 }
 
