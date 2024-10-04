@@ -1,8 +1,12 @@
+import AudioPlayerBar from "./components/AudioPlayerBar"
 import Mobile from "./views/Mobile"
 
 const App = () => {
   return (
-    <Mobile />
+    <main>
+      <AudioPlayerBar />
+      <Mobile />
+    </main>
   )
 }
 
