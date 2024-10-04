@@ -1,10 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-const ImgProfile = () => {
+const ImgProfile = ({url, content}) => {
   return (
     <Avatar>
-  <AvatarImage alt='avatar_image' />
-  <AvatarFallback>ik</AvatarFallback>
+  <AvatarImage src={url} alt='avatar_image' />
+  <AvatarFallback>{content}</AvatarFallback>
 </Avatar>
   )
 }
