@@ -4,12 +4,14 @@ import { getDownloadURL, ref } from "firebase/storage";
 import storage from "../../firebaseConfig";
 import { useRef } from "react";
 import CustomControls from "./CustomControls";
+import { removeFileExtension } from '../utils/RemoveFileExtension'
 
 const AudioPlayerBar = () => {
   const [audioUrl, setAudioUrl] = useState("");
   const [playing, setPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
   const playerRef = useRef(null);
+  const [fileName, setFileName] = useState('')
 
 
   useEffect(() => {
@@ -17,10 +19,11 @@ const AudioPlayerBar = () => {
       try {
         const musicRef = ref(
           storage,
-          "gs://appmusic-a466c.appspot.com/Julieta Venegas/Eres para mi - Julieta Venegas.mp3"
+          "gs://appmusic-a466c.appspot.com/Julieta Venegas/Eres para mi.mp3"
         );
         const url = await getDownloadURL(musicRef);
         setAudioUrl(url);
+        setFileName(removeFileExtension(musicRef.name))
       } catch (error) {
         console.log("error" + error);
       }
@@ -67,6 +70,7 @@ const AudioPlayerBar = () => {
           onPlayPause={handlePlay}
           onSeek={handleSeek}
           progress={progress}
+          fileName={fileName}
         />
         </div>
       ) : (
