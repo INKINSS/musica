@@ -1,9 +1,11 @@
+import CardHits from "@/components/CardHits"
 import HeaderHome from "@/components/HeaderHome"
 
 const Principal = () => {
   return (
-    <main>
+    <main className="px-7">
         <HeaderHome />
+        <CardHits />
     </main>
   )
 }
