@@ -1,35 +1,79 @@
-import { useState, useEffect } from 'react'
-import ReactPlayer from 'react-player'
-import { getDownloadURL, ref } from 'firebase/storage'
-import storage from '../../firebaseConfig'
+import { useState, useEffect } from "react";
+import ReactPlayer from "react-player";
+import { getDownloadURL, ref } from "firebase/storage";
+import storage from "../../firebaseConfig";
+import { useRef } from "react";
+import CustomControls from "./CustomControls";
 
 const AudioPlayerBar = () => {
+  const [audioUrl, setAudioUrl] = useState("");
+  const [playing, setPlaying] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const playerRef = useRef(null);
 
-    const [audioUrl, setAudioUrl] = useState('')
 
-    useEffect(() => {
-        const fetchMusicUrl = async () => {
-            try {
-                const musicRef = ref(storage, 'gs://appmusic-a466c.appspot.com/Julieta Venegas/Eres para mi - Julieta Venegas.mp3')
-                const url = await getDownloadURL(musicRef);
-                setAudioUrl(url)
-            } catch (error) {
-                console.log("error" + error)
-            }
-        }
-        fetchMusicUrl()
-    }, [])
-    
+  useEffect(() => {
+    const fetchMusicUrl = async () => {
+      try {
+        const musicRef = ref(
+          storage,
+          "gs://appmusic-a466c.appspot.com/Julieta Venegas/Eres para mi - Julieta Venegas.mp3"
+        );
+        const url = await getDownloadURL(musicRef);
+        setAudioUrl(url);
+      } catch (error) {
+        console.log("error" + error);
+      }
+    };
+    fetchMusicUrl();
+  }, []);
+
+  const handlePlay = () => {
+    setPlaying(!playing)
+  }
+
+  const handleSeek = (value) => {
+    playerRef.current.seekTo(value)
+  }
+
+  const handleProgress = (state) => {
+    setProgress((state.played*100).toFixed(2));
+  }
 
   return (
-    <div className='fixed bottom-20 w-full flex justify-center'>
+    <div className="fixed bottom-24 w-full flex justify-center">
       {audioUrl ? (
-        <ReactPlayer className='bg-red-300' height={'3rem'} width={'80%'} url={audioUrl} playing controls />
+        <div className="w-[80%]">
+        <ReactPlayer
+          className="bg-red-300"
+          height={"0"}
+          loop
+          width={"0"}
+          url={audioUrl}
+          playing={playing}
+          controls
+          ref={playerRef}
+          onProgress={handleProgress}
+          config={{
+            file: {
+              attributes: {
+                controlsList: "nodownload",
+              }
+            },
+          }}
+        />
+        <CustomControls
+          play={playing}
+          onPlayPause={handlePlay}
+          onSeek={handleSeek}
+          progress={progress}
+        />
+        </div>
       ) : (
         <p>Loading...</p>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default AudioPlayerBar
+export default AudioPlayerBar;
