@@ -19,7 +19,7 @@ const AudioPlayerBar = () => {
       try {
         const musicRef = ref(
           storage,
-          "gs://appmusic-a466c.appspot.com/Julieta Venegas/Eres para mi.mp3"
+          "gs://appmusic-a466c.appspot.com/Hits/Secrets.mp3"
         );
         const url = await getDownloadURL(musicRef);
         setAudioUrl(url);
