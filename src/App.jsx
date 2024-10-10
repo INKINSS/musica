@@ -3,7 +3,7 @@ import Mobile from "./views/Mobile"
 
 const App = () => {
   return (
-    <main>
+    <main className="flex justify-center">
       <AudioPlayerBar />
       <Mobile />
     </main>

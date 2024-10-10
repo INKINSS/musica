@@ -4,7 +4,7 @@ import { IoMdPause } from "react-icons/io";
 
 const CustomControls = ({ play, onPlayPause, onSeek, progress, fileName }) => {
   return (
-    <div className="flex justify-between items-center w-full py-3 px-6 shadow-custom rounded-lg">
+    <div className="flex justify-between items-center w-full py-3 px-6 rounded-lg">
       <div className="flex items-center gap-3">
         <ImgProfile url={"url"} content={"ik"} />
         <h3 className="text-gray-800">{fileName}</h3>
